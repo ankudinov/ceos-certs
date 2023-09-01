@@ -11,3 +11,7 @@ start: ## Deploy ceos lab
 .PHONY: stop
 stop: ## Destroy ceos lab
 	sudo containerlab destroy --debug --topo $(CURRENT_DIR)/cert-lab.clab.yml --cleanup
+
+.PHONY: cmdo
+cmdo: ## collect snapshot with cmdo
+	cmdo -i cmdo_inventory.yml -o .gitignored/
