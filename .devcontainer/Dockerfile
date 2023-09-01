@@ -39,6 +39,8 @@ RUN pip3 install "ansible-core>=2.13.1,<2.14.0" \
 # install the latest containerlab and yamllint
 RUN bash -c "$(curl -sL https://get.containerlab.dev)" -- -v ${_CLAB_VERSION} \
     && pip3 install --user yamllint
+# install cmdo
+RUN bash -c "$(curl -sL https://raw.githubusercontent.com/hellt/cmdo/master/get.sh)" -- --use-pkg
 
 # add ceos-lab image is _ARTOKEN is not empty
 RUN if [ ! -z ${_ARTOKEN} ]; \

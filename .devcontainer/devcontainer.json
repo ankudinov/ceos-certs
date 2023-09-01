@@ -16,10 +16,8 @@
     // "onCreateCommand": "sudo apt-get update; sudo apt-get install -y chromium",
     // "onCreateCommand": "docker import /home/vscode/tmp/ceos-lab-temp ceos-lab:latest; rm -rf /home/vscode/tmp/; npm i -g carbon-now-cli",
     "onCreateCommand": "docker import /home/vscode/tmp/ceos-lab-temp ceos-lab:latest; rm -rf /home/vscode/tmp/",
-    // install cmdo tool with post-create command
-    "postCreateCommand": "bash -c \"$(curl -sL https://raw.githubusercontent.com/hellt/cmdo/master/get.sh)\"",
     "features": {
-        "ghcr.io/devcontainers/features/docker-in-docker:2.3.1": {
+        "ghcr.io/devcontainers/features/docker-in-docker:2.4.0": {
             "version": "latest"
         },
         // add sshd to support gh cli codespace cp
