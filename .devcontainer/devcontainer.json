@@ -13,6 +13,9 @@
             "_ARTOKEN": "${localEnv:ARTOKEN}"
         }
     },
+    "runArgs": [
+        "--env-file", "${localWorkspaceFolder}/.env"
+    ],
     // "onCreateCommand": "sudo apt-get update; sudo apt-get install -y chromium",
     // "onCreateCommand": "docker import /home/vscode/tmp/ceos-lab-temp ceos-lab:latest; rm -rf /home/vscode/tmp/; npm i -g carbon-now-cli",
     "onCreateCommand": "docker import /home/vscode/tmp/ceos-lab-temp ceos-lab:latest; rm -rf /home/vscode/tmp/",
