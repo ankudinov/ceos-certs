@@ -42,7 +42,7 @@ RUN bash -c "$(curl -sL https://get.containerlab.dev)" -- -v ${_CLAB_VERSION} \
 # install cmdo
 RUN bash -c "$(curl -sL https://raw.githubusercontent.com/hellt/cmdo/master/get.sh)" -- --use-pkg
 
-# add ceos-lab image is _ARTOKEN is not empty
+# add ceos-lab image
 RUN ARTOKEN=$(echo -n "${_ARTOKEN}" | base64) \
     && ARSESSION=$(curl -X "POST" "https://www.arista.com/custom_data/api/cvp/getSessionCode/" -H 'Content-Type: application/json'   -d "{\"accessToken\": \"$ARTOKEN\"}" | sed -n 's|.*"session_code":"\([^"]*\)".*|\1|p') \
     && FILE_PATH=${_AR_FILE_PATH} \
