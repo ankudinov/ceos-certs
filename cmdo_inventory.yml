@@ -1,0 +1,42 @@
+credentials:
+  default:
+    username: admin
+    password: admin
+
+transports:
+  default:
+    strict-key: false
+
+devices:
+
+  spine1:
+    platform: arista_eos
+    address: 192.168.123.11
+    send-commands:
+    - show version
+    - show running-config
+    - show tech-support
+
+  spine2:
+    platform: arista_eos
+    address: 192.168.123.12
+    send-commands:
+    - show version
+    - show running-config
+    - show tech-support
+
+  leaf1:
+    platform: arista_eos
+    address: 192.168.123.21
+    send-commands:
+    - show version
+    - show running-config
+    - show tech-support
+
+  leaf2:
+    platform: arista_eos
+    address: 192.168.123.22
+    send-commands:
+    - show version
+    - show running-config
+    - show tech-support
