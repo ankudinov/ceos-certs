@@ -1,0 +1,38 @@
+---
+- name: generate certs
+  hosts: all
+  vars:    
+    - key_size: 4096
+    - passphrase: # Set if you want passphrase
+    - key_type: RSA # Others include DSA, ECC, Ed25519, Ed448, X25519, X448
+    - country_name: DE
+    - email_address: ava@lab.net
+    - organization_name: Arista Networks, Inc.
+
+  tasks:
+
+    - name: Generate an OpenSSL private key
+      community.crypto.openssl_privatekey:
+        path: "/workspaces/ceos-certs/certificates/{{ inventory_hostname }}.key"
+        size: "{{ key_size }}"
+        type: "{{ key_type }}"
+        backup: yes
+      delegate_to: localhost
+
+    - name: Generate an OpenSSL Certificate Signing Request with Subject information
+      community.crypto.openssl_csr:
+        path: "/workspaces/ceos-certs/certificates/{{ inventory_hostname }}.csr"
+        privatekey_path: "/workspaces/ceos-certs/certificates/{{ inventory_hostname }}.key"
+        country_name: "{{ country_name }}"
+        organization_name: "{{ organization_name }}"
+        email_address: "{{ email_address }}"
+        common_name: "{{ inventory_hostname }}"
+      delegate_to: localhost
+        
+    - name: Create simple self-signed certificate
+      community.crypto.x509_certificate:
+        path: /workspaces/ceos-certs/certificates/{{ inventory_hostname }}.pem
+        privatekey_path: "/workspaces/ceos-certs/certificates/{{ inventory_hostname }}.key"
+        csr_path: "/workspaces/ceos-certs/certificates/{{ inventory_hostname }}.csr"
+        provider: selfsigned
+      delegate_to: localhost
