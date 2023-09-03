@@ -70,6 +70,7 @@
       with_items:
         - /workspaces/ceos-certs/certificates/{{ inventory_hostname }}.pem
         - /workspaces/ceos-certs/certificates/{{ inventory_hostname }}.key
+        - /workspaces/ceos-certs/certificates/ca_cert.key
 
 - name: create ssl profile
   hosts: all
