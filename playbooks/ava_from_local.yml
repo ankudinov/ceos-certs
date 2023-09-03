@@ -7,9 +7,12 @@
         path: /workspaces/ceos-certs/certificates
         state: directory
 
+# https://pki.goog/repo/certs/gsr4.pem
+
 - name: generate certs
   hosts: all
-  vars:    
+  vars:
+    - ca_cert_download_url: "https://pki.goog/repo/certs/gsr4.pem"  # google ca for testing 
     - key_size: 4096
     - passphrase: # Set if you want passphrase
     - key_type: RSA # Others include DSA, ECC, Ed25519, Ed448, X25519, X448
@@ -18,6 +21,12 @@
     - organization_name: Arista Networks, Inc.
 
   tasks:
+
+    - name: Download foo.conf
+      ansible.builtin.get_url:
+        url: "{{ ca_cert_download_url }}"
+        dest: "/workspaces/ceos-certs/certificates/ca_cert.pem"
+      delegate_to: localhost
 
     - name: Generate an OpenSSL private key
       community.crypto.openssl_privatekey:
@@ -61,3 +70,20 @@
       with_items:
         - /workspaces/ceos-certs/certificates/{{ inventory_hostname }}.pem
         - /workspaces/ceos-certs/certificates/{{ inventory_hostname }}.key
+
+- name: 
+  hosts: all
+  vars:
+    ansible_connection: httpapi
+    ansible_network_os: eos
+    ansible_user: admin
+    ansible_password: admin
+    ansible_become: yes
+    ansible_become_method: enable
+    ansible_httpapi_use_ssl: true
+    ansible_httpapi_validate_certs: false
+  tasks:
+  - name: run show commands
+    arista.eos.eos_command:
+      commands:
+      - show ip bgp summary
