@@ -70,7 +70,11 @@
       with_items:
         - /workspaces/ceos-certs/certificates/{{ inventory_hostname }}.pem
         - /workspaces/ceos-certs/certificates/{{ inventory_hostname }}.key
-        - /workspaces/ceos-certs/certificates/ca_cert.pem
+    - name: copy ca cert
+      net_put:
+        src: "/workspaces/ceos-certs/certificates/ca_cert.pem"
+        dest: /mnt/flash/ca_cert.pem
+        protocol: sftp
 
 - name: create ssl profile
   hosts: all
