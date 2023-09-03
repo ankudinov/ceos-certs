@@ -1,4 +1,9 @@
 ---
+- name: Create certificates directory if it does not exist
+  ansible.builtin.file:
+    path: /workspaces/ceos-certs/certificates
+    state: directory
+
 - name: generate certs
   hosts: all
   vars:    
