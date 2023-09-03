@@ -6,8 +6,8 @@ help: ## Display help message
 
 .PHONY: start
 start: ## Deploy ceos lab
-	sudo containerlab deploy --debug --topo $(CURRENT_DIR)/cert-lab.clab.yml --max-workers 2 --timeout 5m --reconfigure
+	sudo containerlab deploy --debug --topo $(CURRENT_DIR)/clab/cert-lab.clab.yml --max-workers 2 --timeout 5m --reconfigure
 
 .PHONY: stop
 stop: ## Destroy ceos lab
-	sudo containerlab destroy --debug --topo $(CURRENT_DIR)/cert-lab.clab.yml --cleanup
+	sudo containerlab destroy --debug --topo $(CURRENT_DIR)/clab/cert-lab.clab.yml --cleanup

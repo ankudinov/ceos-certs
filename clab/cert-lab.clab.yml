@@ -11,6 +11,7 @@ topology:
       image: ceos-lab:latest
   defaults:
     kind: ceos
+    startup-config: init-configs/ceos-init.cfg
   nodes:
     spine1:
       mgmt-ipv4: 192.168.123.11

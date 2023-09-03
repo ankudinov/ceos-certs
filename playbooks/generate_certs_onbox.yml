@@ -1,0 +1,34 @@
+---
+- name: Run show commands on all switches and print the output
+  hosts: all
+  vars:
+    ansible_connection: httpapi
+    ansible_network_os: eos
+    ansible_user: admin
+    ansible_password: admin
+    ansible_become: yes
+    ansible_become_method: enable
+    ansible_httpapi_use_ssl: true
+    ansible_httpapi_validate_certs: false
+    # cert parameters
+    key_algorithm: rsa
+    key_length: 4096
+    key_name: client-key
+    cert_name: client-cert
+    cert_country: DE
+    cert_state: BY
+    cert_org: Arista
+  tasks:
+  - name: run show commands
+    arista.eos.eos_command:
+      commands:
+      - security pki key generate {{ key_algorithm }} {{ key_length }} {{ key_name }}
+      - security pki certificate generate self-signed {{ cert_name }} key {{ key_name }} generate {{ key_algorithm }} {{ key_length }} parameters common-name {{ inventory_hostname }} country {{ cert_country }} state {{ cert_state }} organization {{ cert_org }}
+    register: cli_output
+  - name: display result
+    ansible.builtin.debug:
+      msg:
+      - "key"
+      - "{{ cli_output.stdout_lines[0] }}"
+      - "cert"
+      - "{{ cli_output.stdout_lines[1] }}"
