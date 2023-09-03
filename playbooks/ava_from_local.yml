@@ -71,7 +71,7 @@
         - /workspaces/ceos-certs/certificates/{{ inventory_hostname }}.pem
         - /workspaces/ceos-certs/certificates/{{ inventory_hostname }}.key
 
-- name: 
+- name: create ssl profile
   hosts: all
   vars:
     ansible_connection: httpapi
@@ -83,7 +83,14 @@
     ansible_httpapi_use_ssl: true
     ansible_httpapi_validate_certs: false
   tasks:
-  - name: run show commands
+  - name: create ssl profile
     arista.eos.eos_command:
       commands:
-      - show ip bgp summary
+      - "copy {{ inventory_hostname }}.pem certificate:{{ inventory_hostname }}.pem"
+      - "copy {{ inventory_hostname }}.key certificate:{{ inventory_hostname }}.key"
+      - "copy ca_cert.pem certificate:ca_cert.pem"
+      - "configure terminal"
+      - "management security"
+      - "ssl profile awake-nucleus"
+      - "certificate {{ inventory_hostname }}.pem key client-key"
+      - "trust certificate ca_cert"
