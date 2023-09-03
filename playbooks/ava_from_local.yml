@@ -1,8 +1,11 @@
 ---
 - name: Create certificates directory if it does not exist
-  ansible.builtin.file:
-    path: /workspaces/ceos-certs/certificates
-    state: directory
+  hosts: localhost
+  tasks:
+    - nme: Create certificates directory if it does not exist
+      ansible.builtin.file:
+        path: /workspaces/ceos-certs/certificates
+        state: directory
 
 - name: generate certs
   hosts: all
