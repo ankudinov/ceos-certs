@@ -98,4 +98,4 @@
       - "management security"
       - "ssl profile awake-nucleus"
       - "certificate {{ inventory_hostname }}.pem key client-key"
-      - "trust certificate ca_cert"
+      - "trust certificate ca_cert.pem"
