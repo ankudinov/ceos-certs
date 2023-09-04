@@ -42,16 +42,11 @@
                 "donjayamanne.githistory",
                 // spell checker
                 "streetsidesoftware.code-spell-checker",
-                // errors and highlighters
-                "mechatroner.rainbow-csv",
-                // excalidraw
-                "pomdtr.excalidraw-editor",
                 // markdown
                 "yzhang.markdown-all-in-one",
                 "bierner.markdown-checkbox",
                 "DavidAnson.vscode-markdownlint",
                 // various tools
-                "tuxtina.json2yaml",
                 "vscode-icons-team.vscode-icons",
                 "mutantdino.resourcemonitor"
             ]
