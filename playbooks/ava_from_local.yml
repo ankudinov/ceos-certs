@@ -101,17 +101,6 @@
       parents: management security
       before: no management security
       replace: block
-  - name: configure monitor security
-    arista.eos.eos_config:
-      lines:
-      - nucleus awake-nucleus
-      - no disabled
-      - local interface Management0
-      - destination nucleus1.foo.com
-      - ssl profile awake-nucleus
-      parents: monitor security awake
-      before: no monitor security awake
-      replace: block
   - name: run show commands
     arista.eos.eos_command:
       commands:
