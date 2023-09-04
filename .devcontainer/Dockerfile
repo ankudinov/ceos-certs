@@ -3,7 +3,6 @@ FROM mcr.microsoft.com/devcontainers/python:0-3.9-bullseye
 # change this for every release
 ARG _AVD_VERSION
 ARG _CLAB_VERSION
-ARG _RELEASE_DATE
 ARG _ARTOKEN
 ARG _AR_FILE_PATH
 
@@ -33,8 +32,7 @@ RUN pip3 install "ansible-core>=2.13.1,<2.14.0" \
     && ansible-galaxy collection install community.crypto
 
 # install the latest containerlab and yamllint
-RUN bash -c "$(curl -sL https://get.containerlab.dev)" -- -v ${_CLAB_VERSION} \
-    && pip3 install --user yamllint
+RUN bash -c "$(curl -sL https://get.containerlab.dev)" -- -v ${_CLAB_VERSION}
 # install cmdo
 RUN bash -c "$(curl -sL https://raw.githubusercontent.com/hellt/cmdo/master/get.sh)" -- --use-pkg
 
