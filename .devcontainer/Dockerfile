@@ -22,7 +22,7 @@ RUN apt-get update \
 USER vscode
 ENV PATH=$PATH:/home/vscode/.local/bin
 # install Ansible
-ENV ANSIBLE_CONFIG="/workspaces/building-containerlab-with-ceos/ansible.cfg"
+ENV ANSIBLE_CONFIG="/workspaces/ceos-certs/ansible.cfg"
 RUN pip3 install "ansible-core>=2.13.1,<2.14.0" \
     && ansible-galaxy collection install ansible.netcommon \
     && ansible-galaxy collection install arista.eos \
