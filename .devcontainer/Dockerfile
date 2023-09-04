@@ -34,7 +34,9 @@ RUN pip3 install "ansible-core>=2.13.1,<2.14.0" \
     && ansible-galaxy collection install ansible.netcommon \
     && ansible-galaxy collection install arista.eos \
     # install community.general to support callback plugins in ansible.cfg, etc.
-    && ansible-galaxy collection install community.general
+    && ansible-galaxy collection install community.general \
+    # add community crypto for cert generation
+    && community.crypto
 
 # install the latest containerlab and yamllint
 RUN bash -c "$(curl -sL https://get.containerlab.dev)" -- -v ${_CLAB_VERSION} \
