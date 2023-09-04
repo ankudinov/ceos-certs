@@ -1,0 +1,12 @@
+all:
+  children:
+    ceos:
+      hosts:
+        leaf1:
+          ansible_host: 192.168.123.21
+        leaf2:
+          ansible_host: 192.168.123.22
+        spine1:
+          ansible_host: 192.168.123.11
+        spine2:
+          ansible_host: 192.168.123.12
