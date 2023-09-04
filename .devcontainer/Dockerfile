@@ -33,8 +33,6 @@ RUN pip3 install "ansible-core>=2.13.1,<2.14.0" \
 
 # install the latest containerlab and yamllint
 RUN bash -c "$(curl -sL https://get.containerlab.dev)" -- -v ${_CLAB_VERSION}
-# install cmdo
-RUN bash -c "$(curl -sL https://raw.githubusercontent.com/hellt/cmdo/master/get.sh)" -- --use-pkg
 
 # add ceos-lab image
 RUN ARTOKEN=$(echo -n "${_ARTOKEN}" | base64) \
