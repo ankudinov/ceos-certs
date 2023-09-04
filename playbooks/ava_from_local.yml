@@ -62,25 +62,21 @@
     ansible_user: admin
     ansible_password: admin
   tasks:
-    - name: copy certificate and key
+    - name: copy certificate
       net_put:
         src: "{{ item }}"
-        # dest: /mnt/flash/{{ inventory_hostname }}.pem
         dest: /persist/secure/ssl/certs/{{ inventory_hostname }}.pem
         protocol: sftp
       with_items:
         - /workspaces/ceos-certs/certificates/{{ inventory_hostname }}.pem
-        # - /workspaces/ceos-certs/certificates/{{ inventory_hostname }}.key
     - name: copy key
       net_put:
         src: "/workspaces/ceos-certs/certificates/{{ inventory_hostname }}.key"
-        # dest: /mnt/flash/{{ inventory_hostname }}.pem
         dest: /persist/secure/ssl/keys/{{ inventory_hostname }}.key
         protocol: sftp
     - name: copy ca cert
       net_put:
         src: "/workspaces/ceos-certs/certificates/ca_cert.pem"
-        # dest: /mnt/flash/ca_cert.pem
         dest: /persist/secure/ssl/certs/ca_cert.pem
         protocol: sftp
 
@@ -104,6 +100,17 @@
       - "trust certificate ca_cert.pem"
       parents: management security
       before: no management security
+      replace: block
+  - name: configure monitor security
+    arista.eos.eos_config:
+      lines:
+      - nucleus awake-nucleus
+      - no disabled
+      - local interface Management0
+      - destination nucleus1.foo.com
+      - ssl profile awake-nucleus
+      parents: monitor security awake
+      before: no monitor security awake
       replace: block
   - name: run show commands
     arista.eos.eos_command:
