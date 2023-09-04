@@ -24,6 +24,7 @@ ENV PATH=$PATH:/home/vscode/.local/bin
 # install Ansible
 ENV ANSIBLE_CONFIG="/workspaces/ceos-certs/ansible.cfg"
 RUN pip3 install "ansible-core>=2.13.1,<2.14.0" \
+    && pip3 install ansible-pylibssh \
     && ansible-galaxy collection install ansible.netcommon \
     && ansible-galaxy collection install arista.eos \
     # install community.general to support callback plugins in ansible.cfg, etc.
