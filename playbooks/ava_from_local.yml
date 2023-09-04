@@ -70,12 +70,12 @@
         protocol: sftp
       with_items:
         - /workspaces/ceos-certs/certificates/{{ inventory_hostname }}.pem
-        - /workspaces/ceos-certs/certificates/{{ inventory_hostname }}.key
+        # - /workspaces/ceos-certs/certificates/{{ inventory_hostname }}.key
     - name: copy key
       net_put:
         src: "/workspaces/ceos-certs/certificates/{{ inventory_hostname }}.key"
         # dest: /mnt/flash/{{ inventory_hostname }}.pem
-        dest: /persist/secure/ssl/keys/{{ inventory_hostname }}.pem
+        dest: /persist/secure/ssl/keys/{{ inventory_hostname }}.key
         protocol: sftp
     - name: copy ca cert
       net_put:
@@ -97,13 +97,21 @@
     ansible_httpapi_validate_certs: false
   tasks:
   - name: create ssl profile
+    arista.eos.eos_config:
+      lines:
+      - ssl profile awake-nucleus
+      - "certificate {{ inventory_hostname }}.pem key {{ inventory_hostname }}.key"
+      - "trust certificate ca_cert.pem"
+      parents: management security
+      before: no management security
+      replace: block
+  - name: run show commands
     arista.eos.eos_command:
       commands:
-      - "copy {{ inventory_hostname }}.pem certificate:{{ inventory_hostname }}.pem"
-      - "copy {{ inventory_hostname }}.key certificate:{{ inventory_hostname }}.key"
-      - "copy ca_cert.pem certificate:ca_cert.pem"
-      - "configure terminal"
-      - "management security"
-      - "ssl profile awake-nucleus"
-      - "certificate {{ inventory_hostname }}.pem key client-key"
-      - "trust certificate ca_cert.pem"
+      - show management security ssl profile awake-nucleus
+    register: cli_output
+  - name: display result
+    ansible.builtin.debug:
+      msg:
+      - "sh management security ssl profile awake-nucleus"
+      - "{{ cli_output.stdout_lines[0] }}"
