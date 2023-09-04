@@ -10,3 +10,5 @@ playground to test cert rollout
 4. Deploy certificates with `ansible-playbook playbooks/ava_from_local.yml`
 
 > NOTE: there is also `generate_certs_onbox.yml` that can replace local cert generation part if required.
+
+Delete Codespace after testing.
